@@ -1,4 +1,5 @@
-import express from 'express'
+import express, { NextFunction, Request,Response } from 'express'
+ import globaErrorHandler from './middleware/globalErrorHandler';
 
 
 const app=express();
@@ -8,7 +9,11 @@ const app=express();
 //Http method
 app.get('/', (req, res, next)=>{
     res.json({message: "welcome to aou api"})
-})
+});
+
+//GLobal error Handler
+
+app.use(globaErrorHandler);
 
 
 
