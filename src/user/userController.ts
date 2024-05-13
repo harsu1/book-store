@@ -30,21 +30,32 @@ const createUser=async (req:Request, res:Response, next:NextFunction)=>{
       }
     
       //password-> hash
-    const hashedPassword=await bcrypt.hash(password,10)
+    const hashedPassword=await bcrypt.hash(password,10);
 
-    const newUser=await userModel.create({
+    let newUser: User;
+
+try{
+     newUser=await userModel.create({
         
         name,
         email,
         password: hashedPassword,
     });
-
-    //token generation
+}
+catch(err){
+   return next(createHttpError(500,"Error while creating user ."));
+}
+try {
+     //token generation
      const token=sign({sub: newUser._id},config.jwtSecret as string,{expiresIn:'7d' })
     //process
 
     //response
     res.json({accessToken: token});
+} catch (error) {
+    return next(createHttpError(500, "Error while signing the jwt token"))
+}
+
 }
 
 
