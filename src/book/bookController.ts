@@ -193,9 +193,9 @@ const   deleteBook=async(req: Request, res: Response, next: NextFunction)=>{
   const bookFilePublicId=bookFilesplit.at(-2)+"/"+bookFilesplit.at(-1)
 
   await cloudinary.uploader.destroy(coverImagePublicId);
-  await cloudinary.uploader.destroy( bookFilePublicId{
-    resource_type:'raw'
-  });
+  await cloudinary.uploader.destroy( bookFilePublicId,{
+    resource_type:'raw',
+  })
   await bookModel.deleteOne({_id:bookId})
 
 
