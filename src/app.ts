@@ -2,9 +2,17 @@ import express, { NextFunction, Request,Response } from 'express'
  import globaErrorHandler from './middleware/globalErrorHandler';
 import userRouter from './user/userRouter';
 import bookRouter from './book/bookRouter';
-
+import { config } from './config/config';
+import cors from 'cors';
 
 const app=express();
+
+
+app.use(
+    cors({
+        origin:config.frontendDomain
+    })
+)
 app.use(express.json());
 
 //routes
