@@ -9,7 +9,7 @@ import fs from "node:fs";
 import authenticate, { AuthRequest } from "../middleware/authenticate";
 
 const createBook = async (req: Request, res: Response, next: NextFunction) => {
-    const {title,genre}=req.body;
+    const {title,genre, description}=req.body;
 
   const files = req.files as { [filename: string]: Express.Multer.File[] };
 
@@ -48,6 +48,7 @@ const createBook = async (req: Request, res: Response, next: NextFunction) => {
   const newBook=await bookModel.create({
     title,
     genre,
+    description,
     author:_req.userId,
     coverImage:uploadResult.secure_url,
     file:bookFileUploadResult.secure_url,
